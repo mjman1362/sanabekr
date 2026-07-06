@@ -322,7 +322,20 @@
                 </button>
             </div>
 
-            <div class="p-5 overflow-y-auto space-y-5 flex-grow custom-scroll">
+            <!-- لایه امنیتی ورود رمز عبور سفارشی بدون استفاده از Alert یا Prompt -->
+            <div id="admin-login-section" class="p-6 space-y-4 flex flex-col items-center justify-center text-center">
+                <div class="w-12 h-12 rounded-full bg-rose-50 text-brandPink-500 flex items-center justify-center text-xl mb-1">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h4 class="font-extrabold text-xs text-slate-800">ورود به بخش مدیریت غرفه</h4>
+                <p class="text-[10px] text-slate-400">بانو جان، لطفاً رمز عبور مدیریت پیج ثنابکر را وارد کنید.</p>
+                <input id="admin-password-input" type="password" placeholder="رمز عبور را وارد کنید" class="w-full text-center p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brandPink-500 focus:outline-none">
+                <p id="admin-login-error" class="text-[9px] text-rose-600 font-extrabold hidden">⚠️ رمز عبور اشتباه است! مجدداً تلاش کنید.</p>
+                <button onclick="checkAdminPassword()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white font-bold text-xs hover:opacity-95 transition-all">ورود به پنل</button>
+            </div>
+
+            <!-- محتوای اصلی غرفه (فقط پس از وارد کردن رمز عبور نمایش داده می‌شود) -->
+            <div id="admin-main-section" class="p-5 overflow-y-auto space-y-5 flex-grow custom-scroll hidden">
                 <!-- فرم افزودن محصول جدید -->
                 <div class="bg-rose-50/40 p-4 rounded-2xl border border-rose-100/30 space-y-3">
                     <h4 class="font-extrabold text-xs text-brandPink-600"><i class="fa-solid fa-plus-circle ml-1"></i> افزودن محصول جدید</h4>
@@ -793,8 +806,29 @@ ${currentProductsInfo}
         function toggleAdminPanel() {
             const modal = document.getElementById('admin-modal');
             modal.classList.toggle('hidden');
+            
             if (!modal.classList.contains('hidden')) {
+                // هربار باز می‌شود، وضعیت را به فرم قفل اولیه ریست کن
+                document.getElementById('admin-login-section').classList.remove('hidden');
+                document.getElementById('admin-main-section').classList.add('hidden');
+                document.getElementById('admin-password-input').value = '';
+                document.getElementById('admin-login-error').classList.add('hidden');
+            }
+        }
+
+        // بررسی رمز عبور ورودی برای پنل مدیریت با دیتای لوکال
+        function checkAdminPassword() {
+            const enteredPass = document.getElementById('admin-password-input').value;
+            const errorElement = document.getElementById('admin-login-error');
+            
+            // رمز عبور ایمن پیش‌فرض
+            if (enteredPass === 'sanabekr120') {
+                errorElement.classList.add('hidden');
+                document.getElementById('admin-login-section').classList.add('hidden');
+                document.getElementById('admin-main-section').classList.remove('hidden');
                 renderAdminProductList();
+            } else {
+                errorElement.classList.remove('hidden');
             }
         }
 
