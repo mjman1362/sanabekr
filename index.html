@@ -78,15 +78,6 @@
         .page-transition {
             transition: all 0.25s ease-in-out;
         }
-        
-        /* انیمیشن دکمه چت */
-        @keyframes pulse-slow {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.05); opacity: 1; }
-        }
-        .pulse-pink {
-            animation: pulse-slow 3s infinite;
-        }
     </style>
 </head>
 <body class="h-full flex flex-col justify-between overflow-hidden text-slate-800">
@@ -110,6 +101,11 @@
                 <i class="fa-brands fa-instagram text-sm"></i>
                 <span class="hidden xs:inline">@sanabekr</span>
             </a>
+            
+            <!-- دکمه ورود به پنل مدیریت با آیکون چرخ‌دنده تنظیمات -->
+            <button onclick="toggleAdminPanel()" class="p-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all" title="مدیریت محصولات">
+                <i class="fa-solid fa-sliders text-base"></i>
+            </button>
             
             <!-- دکمه سبد خرید با شمارنده فانتزی -->
             <button onclick="toggleCartDrawer()" class="relative p-2 rounded-full bg-rose-50 text-brandPink-600 hover:bg-rose-100 transition-all">
@@ -179,7 +175,7 @@
                         <div class="w-7 h-7 rounded-full bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white flex items-center justify-center text-xs flex-shrink-0">🤖</div>
                         <div class="bg-white p-3.5 rounded-2xl rounded-tr-none shadow-sm text-xs leading-relaxed text-slate-700">
                             سلام بانو جان! به رسانه سلامت ثنابکر خوش آمدید. 🌸
-                            <br>من مشاور صمیمی شما هستم. می‌توانید درباره **قیمت‌ها، نحوه مصرف** یا **مدت ماندگاری هر بسته** از من بپرسید. حتی درباره خواص گیاهان دارویی و سلامت بانوان هم هر سوالی دارید بفرمایید!
+                            <br>من مشاور صمیمی شما هستم. می‌توانید درباره **قیمت‌ها، نحوه مصرف** یا **حجم محصول و ماندگاری هر بسته** از من بپرسید. حتی درباره خواص گیاهان دارویی و سلامت بانوان هم هر سوالی دارید بفرمایید!
                         </div>
                     </div>
                 </div>
@@ -187,8 +183,8 @@
                 <!-- دکمه‌های سریع برای پرسش‌های متداول -->
                 <div class="px-3 py-2 bg-white/70 border-t border-rose-100/50 flex gap-2 overflow-x-auto whitespace-nowrap custom-scroll">
                     <button onclick="askBotQuickTag('قیمت محصولات')" class="px-3 py-1.5 rounded-full bg-brandPink-50 text-brandPink-600 hover:bg-brandPink-100 text-[10px] font-bold transition flex-shrink-0">💰 قیمت محصولات</button>
-                    <button onclick="askBotQuickTag('طرز مصرف دانه صمغ‌بکر')" class="px-3 py-1.5 rounded-full bg-brandOrange-50 text-brandOrange-600 hover:bg-brandOrange-100 text-[10px] font-bold transition flex-shrink-0">💡 طرز مصرف صمغ‌بکر</button>
-                    <button onclick="askBotQuickTag('مشاوره سلامت زنان')" class="px-3 py-1.5 rounded-full bg-purple-50 text-purple-600 hover:bg-purple-100 text-[10px] font-bold transition flex-shrink-0">🩺 مشاوره سلامت زنان</button>
+                    <button onclick="askBotQuickTag('طرز مصرف ساشه فیبر')" class="px-3 py-1.5 rounded-full bg-brandOrange-50 text-brandOrange-600 hover:bg-brandOrange-100 text-[10px] font-bold transition flex-shrink-0">💡 طرز مصرف ساشه فیبر</button>
+                    <button onclick="askBotQuickTag('مدت زمان استفاده هر ساشه')" class="px-3 py-1.5 rounded-full bg-purple-50 text-purple-600 hover:bg-purple-100 text-[10px] font-bold transition flex-shrink-0">⏳ حجم و ماندگاری هر بسته</button>
                 </div>
 
                 <!-- فیلد ورودی پیام متن -->
@@ -201,79 +197,18 @@
             </div>
         </div>
 
-        <!-- تب سوم: اطلاعات پیج و رسانه سلامت -->
-        <div id="tab-about" class="page-transition hidden p-4 space-y-6">
-            <!-- کارت برند و اطلاعات رسانه -->
-            <div class="bg-white rounded-3xl p-5 border border-rose-100 shadow-sm text-center space-y-4">
-                <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-brandPink-500 to-brandOrange-500 flex items-center justify-center text-white text-3xl shadow-lg relative">
-                    <i class="fa-solid fa-heart-pulse"></i>
-                </div>
-                <div class="space-y-1">
-                    <h3 class="font-black text-base text-slate-800">ثنابکر</h3>
-                    <p class="text-xs text-brandPink-600 font-extrabold">رسانه سلامت بانوان</p>
-                </div>
-                <p class="text-xs text-slate-500 leading-relaxed max-w-sm mx-auto">
-                    ماموریت ما در ثنابکر، آگاهی‌بخشی و ارائه بکرترین، خالص‌ترین و باکیفیت‌ترین محصولات گیاهی و درمانی بومی برای التیام و ارتقای شادابی و تندرستی بانوان گرانقدر این مرز و بوم است.
-                </p>
-                
-                <div class="pt-4 border-t border-slate-100 grid grid-cols-2 gap-3">
-                    <a href="https://instagram.com/sanabekr" target="_blank" class="flex flex-col items-center justify-center p-3 bg-gradient-to-tr from-rose-50 to-orange-50 rounded-2xl border border-rose-100 hover:scale-102 transition">
-                        <i class="fa-brands fa-instagram text-2xl text-pink-600 mb-1"></i>
-                        <span class="text-[10px] font-black text-slate-700">اینستاگرام ما</span>
-                        <span class="text-[8px] text-slate-400">@sanabekr</span>
-                    </a>
-                    <button onclick="toggleAdminPanel()" class="flex flex-col items-center justify-center p-3 bg-gradient-to-tr from-slate-50 to-zinc-50 rounded-2xl border border-slate-200 hover:scale-102 transition">
-                        <i class="fa-solid fa-sliders text-2xl text-slate-600 mb-1"></i>
-                        <span class="text-[10px] font-black text-slate-700">مدیریت محصولات</span>
-                        <span class="text-[8px] text-slate-400">تنظیمات فروشگاه</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- بخش مقالات کوتاه و مجله تندرستی -->
-            <div class="space-y-3">
-                <h4 class="font-extrabold text-xs text-slate-800 flex items-center gap-1.5">
-                    <i class="fa-solid fa-book-open text-brandPink-500"></i> مجله تندرستی ثنابکر
-                </h4>
-                
-                <div class="space-y-3">
-                    <div class="bg-gradient-to-r from-pink-50 to-white rounded-2xl p-4 border border-pink-100/40 flex gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-lg flex-shrink-0">🌿</div>
-                        <div class="space-y-1">
-                            <h5 class="font-bold text-xs text-slate-800">اهمیت سم‌زدایی بدن</h5>
-                            <p class="text-[10px] text-slate-500 leading-relaxed">مصرف منظم و ناشتای برخی صمغ‌های درمانی گیاهی می‌تواند در پاکسازی کبد چرب و تعادل هورمونی بانوان نقش بی‌بدیلی ایفا کند.</p>
-                        </div>
-                    </div>
-                    <div class="bg-gradient-to-r from-orange-50 to-white rounded-2xl p-4 border border-orange-100/40 flex gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-lg flex-shrink-0">🍵</div>
-                        <div class="space-y-1">
-                            <h5 class="font-bold text-xs text-slate-800">دمنوش‌های گرم و کاهش درد پریود</h5>
-                            <p class="text-[10px] text-slate-500 leading-relaxed">جایگزین کردن چای معمولی با دمنوش‌های ارگانیک با طبع گرم در کاهش گرفتگی‌های رحمی و افزایش نشاط روزانه بانوان بسیار موثر است.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </main>
 
-    <!-- منوی چسبان ناوبری پایین مخصوص موبایل -->
-    <nav class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-rose-100 py-2.5 px-6 flex justify-around items-center z-40 shadow-lg">
-        <button onclick="changeTab('shop')" id="btn-tab-shop" class="flex flex-col items-center gap-1 text-brandPink-600 transition-all duration-200">
+    <!-- منوی چسبان ناوبری پایین مخصوص موبایل (بهینه‌سازی شده دو گزینه‌ای) -->
+    <nav class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-rose-100 py-2.5 px-8 flex justify-around items-center z-40 shadow-lg">
+        <button onclick="changeTab('shop')" id="btn-tab-shop" class="flex-1 py-1 flex flex-col items-center gap-1 text-brandPink-600 transition-all duration-200 border-l border-rose-50">
             <i class="fa-solid fa-shop text-lg"></i>
-            <span class="text-[9px] font-black">ویترین فروشگاه</span>
+            <span class="text-[10px] font-black">ویترین فروشگاه</span>
         </button>
         
-        <button onclick="changeTab('chat')" id="btn-tab-chat" class="flex flex-col items-center gap-1 text-slate-400 transition-all duration-200 relative">
-            <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-brandPink-500 to-brandOrange-500 text-white flex items-center justify-center shadow-md absolute -top-7 active:scale-95 transition-transform duration-150">
-                <i class="fa-solid fa-comment-dots text-xl"></i>
-            </div>
-            <span class="text-[9px] font-black mt-5">دستیار هوشمند</span>
-        </button>
-        
-        <button onclick="changeTab('about')" id="btn-tab-about" class="flex flex-col items-center gap-1 text-slate-400 transition-all duration-200">
-            <i class="fa-solid fa-heart text-lg"></i>
-            <span class="text-[9px] font-black">رسانه سلامت</span>
+        <button onclick="changeTab('chat')" id="btn-tab-chat" class="flex-1 py-1 flex flex-col items-center gap-1 text-slate-400 transition-all duration-200">
+            <i class="fa-solid fa-comment-dots text-lg"></i>
+            <span class="text-[10px] font-black">دستیار هوشمند</span>
         </button>
     </nav>
 
@@ -322,7 +257,7 @@
                 </button>
             </div>
 
-            <!-- لایه امنیتی ورود رمز عبور سفارشی بدون استفاده از Alert یا Prompt -->
+            <!-- لایه امنیتی ورود رمز عبور سفارشی -->
             <div id="admin-login-section" class="p-6 space-y-4 flex flex-col items-center justify-center text-center">
                 <div class="w-12 h-12 rounded-full bg-rose-50 text-brandPink-500 flex items-center justify-center text-xl mb-1">
                     <i class="fa-solid fa-lock"></i>
@@ -343,23 +278,23 @@
                     <div class="space-y-2 text-xs">
                         <div>
                             <label class="block font-bold text-slate-600 mb-1">نام محصول</label>
-                            <input id="admin-product-name" type="text" placeholder="مثال: دانه اسپند معطر" class="w-full p-2.5 rounded-xl border border-slate-200">
+                            <input id="admin-product-name" type="text" placeholder="مثال: ساشه فیبر مولتی ویتامینه" class="w-full p-2.5 rounded-xl border border-slate-200">
                         </div>
                         <div>
                             <label class="block font-bold text-slate-600 mb-1">قیمت (تومان)</label>
-                            <input id="admin-product-price" type="number" placeholder="مثال: 120000" class="w-full p-2.5 rounded-xl border border-slate-200">
+                            <input id="admin-product-price" type="number" placeholder="مثال: 750000" class="w-full p-2.5 rounded-xl border border-slate-200">
                         </div>
                         <div>
-                            <label class="block font-bold text-slate-600 mb-1">طرز مصرف دقیق</label>
-                            <textarea id="admin-product-usage" placeholder="مثال: روزی یک قاشق ناشتا میل شود" class="w-full p-2.5 rounded-xl border border-slate-200 h-16 resize-none"></textarea>
+                            <label class="block font-bold text-slate-600 mb-1">نحوه مصرف دقیق</label>
+                            <textarea id="admin-product-usage" placeholder="مثال: روزی یک قاشق غذاخوری در وعده ناهار..." class="w-full p-2.5 rounded-xl border border-slate-200 h-16 resize-none"></textarea>
                         </div>
                         <div>
-                            <label class="block font-bold text-slate-600 mb-1">طول دوره استفاده هر بسته</label>
-                            <input id="admin-product-duration" type="text" placeholder="مثال: هر بسته برای مصرف ۴۰ روز است" class="w-full p-2.5 rounded-xl border border-slate-200">
+                            <label class="block font-bold text-slate-600 mb-1">حجم محصول (توضیحات)</label>
+                            <input id="admin-product-duration" type="text" placeholder="مثال: هر بسته محصول برای مصرف 50 تا 60 روز است" class="w-full p-2.5 rounded-xl border border-slate-200">
                         </div>
                         <div>
-                            <label class="block font-bold text-slate-600 mb-1">آدرس عکس ارگانیک</label>
-                            <input id="admin-product-image" type="text" placeholder="https://images.unsplash.com/..." class="w-full p-2.5 rounded-xl border border-slate-200">
+                            <label class="block font-bold text-slate-600 mb-1">آدرس عکس محصول</label>
+                            <input id="admin-product-image" type="text" placeholder="مثال: Gemini_Generated_Image_b787jhb787jhb787.png" class="w-full p-2.5 rounded-xl border border-slate-200">
                         </div>
                     </div>
                     
@@ -379,31 +314,15 @@
 
     <!-- بخش منطق و پردازش جاوا اسکریپت اپلیکیشن -->
     <script>
-        // دیتای خام فرضی اولیه غرفه سلامت ثنابکر
+        // دیتای اختصاصی جدید غرفه سلامت ثنابکر (با حذف موارد قبلی و طبق درخواست شما)
         const initialProducts = [
             {
                 id: 1,
-                name: "دانه درمانی گیاه صمغ‌بکر (خالص)",
-                price: 185000,
-                usage: "یک عدد دانه را صبح ناشتا همراه با یک لیوان آب گرم قورت دهید. نیاز به خرد کردن یا جویدن ندارد.",
-                duration: "هر بسته حاوی ۶۰ عدد دانه بوده و برای دوره استفاده ۶۰ روزه کاملاً کافی است.",
-                image: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=400&q=80"
-            },
-            {
-                id: 2,
-                name: "پودر اکسیر سلامتی بانوان ثنابکر",
-                price: 240000,
-                usage: "یک قاشق چای‌خوری از پودر را درون یک فنجان شیر بادام یا آب ولرم حل کرده و غروب‌ها بنوشید.",
-                duration: "هر ظرف حاوی ۱۵۰ گرم بوده و برای درمان و استفاده مداوم ۴۵ روز پاسخگو است.",
-                image: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&w=400&q=80"
-            },
-            {
-                id: 3,
-                name: "بسته دمنوش گیاهی آرامش و پاکسازی",
-                price: 135000,
-                usage: "یک تی‌بگ هرمی را داخل قوری آب جوش قرار داده و اجازه دهید ۱۰ دقیقه دم بکشد. شب‌ها قبل خواب میل شود.",
-                duration: "هر بسته شامل ۳۰ دمنوش پاکسازی هرمی است که مناسب درمان ۱ ماهه می‌باشد.",
-                image: "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?auto=format&fit=crop&w=400&q=80"
+                name: "ساشه فیبر مولتی ویتامینه",
+                price: 750000,
+                usage: "روزی یک قاشق غذاخوری در وعده ناهار و یک قاشق غذاخوری در وعده شام",
+                duration: "هر بسته محصول برای مصرف 50 تا 60 روز است",
+                image: "Gemini_Generated_Image_b787jhb787jhb787.png"
             }
         ];
 
@@ -424,7 +343,7 @@
 
         // کنترل جابجایی بین تب‌های برنامه
         function changeTab(tabId) {
-            const tabs = ['shop', 'chat', 'about'];
+            const tabs = ['shop', 'chat'];
             tabs.forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 const btn = document.getElementById(`btn-tab-${t}`);
@@ -448,15 +367,15 @@
             const totalBadge = document.getElementById('shop-total-badge');
             
             grid.innerHTML = '';
-            totalBadge.innerText = `${products.length} محصول ارگانیک`;
+            totalBadge.innerText = `${products.length} محصول فعال`;
 
             products.forEach(p => {
-                const img = p.image || 'https://images.unsplash.com/photo-1541256996761-85df2eff3139?auto=format&fit=crop&w=300&q=80';
+                const img = p.image || 'https://placehold.co/400x400/fff1f2/e11d48?text=Sanabekr';
                 
                 const card = `
                     <div class="bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                        <div class="relative h-44 bg-slate-100 overflow-hidden">
-                            <img src="${img}" alt="${p.name}" class="w-full h-full object-cover">
+                        <div class="relative h-64 bg-slate-100 overflow-hidden">
+                            <img src="${img}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x400/fff1f2/e11d48?text=Sanabekr';">
                             <span class="absolute top-2 right-2 bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white text-[9px] font-black px-2.5 py-1 rounded-full shadow-sm">توصیه ثنابکر</span>
                         </div>
                         
@@ -464,8 +383,8 @@
                             <div class="space-y-1.5">
                                 <h4 class="font-extrabold text-xs text-slate-800">${p.name}</h4>
                                 <div class="bg-gradient-to-tr from-rose-50/50 to-orange-50/50 rounded-2xl p-2.5 text-[10px] text-slate-600 space-y-1">
-                                    <p class="leading-relaxed">💡 <span class="font-extrabold text-slate-700">روش مصرف:</span> ${p.usage}</p>
-                                    <p class="leading-relaxed">⏳ <span class="font-extrabold text-slate-700">دوره مصرف:</span> ${p.duration}</p>
+                                    <p class="leading-relaxed">💡 <span class="font-extrabold text-slate-700">نحوه مصرف:</span> ${p.usage}</p>
+                                    <p class="leading-relaxed">📦 <span class="font-extrabold text-slate-700">حجم محصول:</span> ${p.duration}</p>
                                 </div>
                             </div>
                             
@@ -551,7 +470,7 @@
 
                 container.innerHTML += `
                     <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-100 relative">
-                        <img src="${item.product.image || 'https://images.unsplash.com/photo-1541256996761-85df2eff3139?auto=format&fit=crop&w=100&q=80'}" class="w-10 h-10 rounded-xl object-cover flex-shrink-0">
+                        <img src="${item.product.image || 'https://placehold.co/100x100/fff1f2/e11d48?text=Sanabekr'}" class="w-10 h-10 rounded-xl object-cover flex-shrink-0" onerror="this.onerror=null; this.src='https://placehold.co/100x100/fff1f2/e11d48?text=Sanabekr';">
                         <div class="flex-grow min-w-0">
                             <h5 class="font-bold text-xs text-slate-800 truncate">${item.product.name}</h5>
                             <span class="text-[10px] text-brandPink-600 font-bold">${item.product.price.toLocaleString('fa-IR')} تومان</span>
@@ -623,7 +542,7 @@
                 <div class="flex items-start gap-2.5 max-w-[85%]">
                     <div class="w-7 h-7 rounded-full bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white flex items-center justify-center text-xs flex-shrink-0">🤖</div>
                     <div class="bg-white p-3.5 rounded-2xl rounded-tr-none shadow-sm text-xs leading-relaxed text-slate-700">
-                        تاریخچه پاک شد! چطور می‌تونم در زمینه سلامت و محصولات گیاهی ثنابکر کمکتون کنم؟ 🌸
+                        تاریخچه پاک شد! چطور می‌تونم در زمینه سلامت و محصولات ثنابکر کمکتون کنم؟ 🌸
                     </div>
                 </div>
             `;
@@ -644,8 +563,8 @@
                 const answer = `
                     🌸 <strong>بانوی گرامی، بابت سوال شما درباره "${product.name}":</strong><br><br>
                     💵 <strong>قیمت درمانی:</strong> ${product.price.toLocaleString('fa-IR')} تومان است.<br>
-                    💡 <strong>طرز استفاده صحیح:</strong> ${product.usage}<br>
-                    ⏳ <strong>میزان کارایی بسته:</strong> ${product.duration}<br><br>
+                    💡 <strong>نحوه مصرف صحیح:</strong> ${product.usage}<br>
+                    📦 <strong>حجم محصول و کارایی:</strong> ${product.duration}<br><br>
                     اگر مایل به تهیه آن هستید، می‌توانید با لمس دکمه «سفارش» روی غرفه، آن را مستقیماً به سبد خریدتان اضافه کنید تا برایتان فاکتور شود!
                 `;
                 appendChatMessage('bot', answer, true);
@@ -696,19 +615,18 @@
             const typingIndicator = showTypingIndicator();
             
             const currentProductsInfo = products.map((p, i) => 
-                `${i+1}. ${p.name} - قیمت: ${p.price} تومان - روش مصرف: ${p.usage} - مدت مصرف: ${p.duration}`
+                `${i+1}. ${p.name} - قیمت: ${p.price} تومان - نحوه مصرف: ${p.usage} - حجم محصول: ${p.duration}`
             ).join('\n');
 
             const systemPrompt = `تو مشاور و دستیار دلسوز و مهربان غرفه سلامت "ثنابکر" (رسانه سلامت بانوان با آی‌دی اینستاگرام @sanabekr) هستی.
-مخاطبین تو همگی بانوان ایرانی هستند که به دنبال درمان‌های گیاهی، ارگانیک و اصلاح سبک زندگی خود با محصولات ارگانیک ثنابکر هستند.
+مخاطبین تو همگی بانوانی هستند که به دنبال درمان‌های گیاهی، ارگانیک، تغذیه سالم و اصلاح سبک زندگی خود با محصولات ارگانیک ثنابکر هستند.
 لحن تو باید بسیار با احترام، محترمانه، صمیمی، دلسوز و سرشار از مهربانی باشد. از واژه‌های زیبایی مثل "بانو جان"، "عزیز ثنابکری"، "سلامت و شاداب باشید" استفاده کن.
 
 اطلاعات غرفه محصولات زنده و موجود ما به این شرح است:
 ${currentProductsInfo}
 
 وظیفه تو:
-به سوالات مشتری در خصوص قیمت محصولات، دستورالعمل‌های درمانی و مصرف، ماندگاری و طول دوره هر بسته دقیق و با استفاده از دیتای بالا پاسخ بده.
-همچنین اگر درباره سلامتی عمومی زنان، مشکلات شایع بانوان، اهمیت دمنوش‌ها یا صمغ‌بکر پرسیدند، مشاوره‌ای دقیق، صمیمانه و مفید ارائه کن.
+به سوالات مشتری در خصوص قیمت محصولات، دستورالعمل‌های درمانی و مصرف، حجم محصول و طول دوره هر بسته دقیق و با استفاده از دیتای بالا پاسخ بده.
 اگر درمورد محصولی سوال کردند که ما نداریم، مودبانه توضیح بده که این قلم را در حال حاضر در غرفه نداریم ولی می‌توانیم بقیه موارد موجود را معرفی کنیم.
 هر جا لازم بود، آدرس اینستاگرام ما را به صورت @sanabekr معرفی کن. کوتاه و مفید پاسخ بده تا در موبایل خوانا باشد.`;
 
@@ -755,7 +673,7 @@ ${currentProductsInfo}
 
             const hasPrice = q.includes("قیمت") || q.includes("چند") || q.includes("تومان") || q.includes("ارزش");
             const hasUsage = q.includes("طرز") || q.includes("مصرف") || q.includes("چگونه") || q.includes("استفاده") || q.includes("دستور");
-            const hasDuration = q.includes("زمان") || q.includes("مدت") || q.includes("چقدر") || q.includes("دوره") || q.includes("بسته");
+            const hasDuration = q.includes("حجم") || q.includes("مدت") || q.includes("چقدر") || q.includes("دوره") || q.includes("بسته") || q.includes("روز");
 
             let matchedProduct = null;
             for (let product of products) {
@@ -771,12 +689,12 @@ ${currentProductsInfo}
                 } else if (hasUsage) {
                     matchedReply = `💡 <strong>طرز مصرف "${matchedProduct.name}":</strong> ${matchedProduct.usage} است. سلامت باشید.`;
                 } else if (hasDuration) {
-                    matchedReply = `⏳ <strong>طول دوره مصرف "${matchedProduct.name}":</strong> ${matchedProduct.duration} است.`;
+                    matchedReply = `📦 <strong>حجم و مدت مصرف "${matchedProduct.name}":</strong> ${matchedProduct.duration} است.`;
                 } else {
                     matchedReply = `🌸 بانو جان، محصول <strong>"${matchedProduct.name}"</strong> بسیار عالی و پرطرفدار است:<br>
                     - بهای درمانی: ${matchedProduct.price.toLocaleString('fa-IR')} تومان<br>
                     - روش استفاده: ${matchedProduct.usage}<br>
-                    - میزان دوره مصرف: ${matchedProduct.duration}`;
+                    - حجم محصول: ${matchedProduct.duration}`;
                 }
             } else {
                 if (hasPrice) {
@@ -790,12 +708,12 @@ ${currentProductsInfo}
                         matchedReply += `🌿 <strong>${p.name}:</strong> ${p.usage}<br><br>`;
                     });
                 } else if (hasDuration) {
-                    matchedReply = "⏳ <strong>میزان کارایی هر بسته و طول دوره مصرف:</strong><br><br>";
+                    matchedReply = "⏳ <strong>میزان کارایی هر بسته و حجم محصول:</strong><br><br>";
                     products.forEach(p => {
                         matchedReply += `⏳ <strong>${p.name}:</strong> ${p.duration}<br><br>`;
                     });
                 } else {
-                    matchedReply = `بانو جان، پیام پرمهر شما دریافت شد. در حال حاضر می‌توانید کلمات کلیدی نظیر "قیمت"، "طرز مصرف صمغ" یا "مدت زمان ماندگاری" را بفرستید تا دقیق‌تر پاسخ دهم. برای مشاوره‌های دقیق‌تر می‌توانید به دایرکت پیج ما به آدرس @sanabekr پیام بدهید 🌸`;
+                    matchedReply = `بانو جان، پیام پرمهر شما دریافت شد. در حال حاضر می‌توانید کلمات کلیدی نظیر "قیمت"، "طرز مصرف ساشه" یا "حجم محصول" را بفرستید تا دقیق‌تر پاسخ دهم. برای مشاوره‌های دقیق‌تر می‌توانید به دایرکت پیج ما به آدرس @sanabekr پیام بدهید 🌸`;
                 }
             }
 
@@ -821,7 +739,7 @@ ${currentProductsInfo}
             const enteredPass = document.getElementById('admin-password-input').value;
             const errorElement = document.getElementById('admin-login-error');
             
-            // رمز عبور ایمن پیش‌فرض
+            // رمز عبور ایمن پیش‌فرض ثنابکر
             if (enteredPass === 'sanabekr120') {
                 errorElement.classList.add('hidden');
                 document.getElementById('admin-login-section').classList.add('hidden');
@@ -869,7 +787,7 @@ ${currentProductsInfo}
                 price,
                 usage,
                 duration,
-                image: image || 'https://images.unsplash.com/photo-1541256996761-85df2eff3139?auto=format&fit=crop&w=400&q=80'
+                image: image || 'https://placehold.co/400x400/fff1f2/e11d48?text=Sanabekr'
             };
 
             products.push(newProduct);
