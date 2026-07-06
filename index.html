@@ -35,13 +35,14 @@
             }
         }
     </script>
-    <!-- Fonts & FontAwesome -->
+    <!-- Google Fonts & Custom Font Style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* پیاده‌سازی فونت پلاک با دیتای فونت‌های استاندارد وب فارسی */
         @font-face {
             font-family: 'Pelak';
             src: local('Pelak'), local('Pelak-Regular'), url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazirmatn-Regular.woff2') format('woff2');
@@ -59,6 +60,7 @@
             -webkit-tap-highlight-color: transparent;
         }
         
+        /* استایل اختصاصی اسکرول‌بار */
         .custom-scroll::-webkit-scrollbar {
             width: 5px;
             height: 5px;
@@ -71,6 +73,7 @@
             border-radius: 10px;
         }
         
+        /* ترنزیشن جابجایی تب‌ها */
         .page-transition {
             transition: all 0.25s ease-in-out;
         }
@@ -78,6 +81,7 @@
 </head>
 <body class="h-full flex flex-col justify-between overflow-hidden text-slate-800">
 
+    <!-- -->
     <!-- هدر شیشه‌ای بالای صفحه -->
     <header class="bg-white/80 backdrop-blur-md border-b border-rose-100 px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow-sm">
         <div class="flex items-center gap-2.5">
@@ -91,11 +95,17 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-2">
-            <!-- لینک سریع اینستاگرام -->
-            <a href="https://instagram.com/sanabekr" target="_blank" class="flex items-center gap-1 bg-gradient-to-r from-purple-600 to-pink-500 hover:opacity-90 text-white text-[11px] font-bold py-1.5 px-3 rounded-full shadow-sm transition-all duration-200">
-                <i class="fa-brands fa-instagram text-sm"></i>
-                <span class="hidden xs:inline">@sanabekr</span>
+        <!-- بخش آدرس پیج اینستاگرام ما و لوگوی اینستاگرام با انیمیشن راهنما -->
+        <div class="flex items-center gap-2.5">
+            <!-- راهنمای متنی به سمت لوگو -->
+            <div class="flex items-center gap-1 text-[9px] md:text-[10px] text-brandPink-600 font-extrabold animate-pulse">
+                <span>آدرس پیج اینستاگرام ما</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </div>
+            
+            <!-- دکمه ورود مستقیم به اینستاگرام -->
+            <a href="https://instagram.com/sanabekr" target="_blank" class="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 hover:scale-105 text-white shadow-md transition-all duration-200">
+                <i class="fa-brands fa-instagram text-base"></i>
             </a>
             
             <!-- دکمه ورود به پنل مدیریت با آیکون چرخ‌دنده تنظیمات -->
@@ -111,6 +121,7 @@
         </div>
     </header>
 
+    <!-- -->
     <!-- بخش اصلی نمایش محتوا -->
     <main class="flex-grow overflow-y-auto custom-scroll pb-20 relative">
         
@@ -195,6 +206,7 @@
 
     </main>
 
+    <!-- -->
     <!-- منوی چسبان ناوبری پایین مخصوص موبایل (بهینه‌سازی شده دو گزینه‌ای) -->
     <nav class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-rose-100 py-2.5 px-8 flex justify-around items-center z-40 shadow-lg">
         <button onclick="changeTab('shop')" id="btn-tab-shop" class="flex-1 py-1 flex flex-col items-center gap-1 text-brandPink-600 transition-all duration-200 border-l border-rose-50">
@@ -228,15 +240,100 @@
             <!-- آیتم‌ها توسط جاوااسکریپت تزریق می‌شوند -->
         </div>
 
-        <!-- فوتور قیمت نهایی و دکمه اتصال به واتساپ -->
+        <!-- فوتور قیمت نهایی و دکمه باز کردن پنل پرداخت -->
         <div class="p-4 border-t border-rose-100 bg-slate-50 space-y-4">
             <div class="flex items-center justify-between text-xs font-bold text-slate-700">
                 <span>جمع کل خرید:</span>
                 <span id="cart-total-price" class="text-brandPink-600 font-extrabold">۰ تومان</span>
             </div>
-            <button onclick="sendOrderViaWhatsApp()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white font-extrabold text-xs shadow-md hover:opacity-95 active:scale-98 transition-all">
-                ثبت سفارش نهایی (ارسال به واتساپ)
+            <button onclick="openPaymentModal()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white font-extrabold text-xs shadow-md hover:opacity-95 active:scale-98 transition-all">
+                ثبت سفارش نهایی و پرداخت
             </button>
+        </div>
+    </div>
+
+    <!-- -->
+    <!-- مودال مدرن و کارت گرافیکی پرداخت کارت‌به‌کارت -->
+    <div id="payment-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <!-- هدر مودال پرداخت -->
+            <div class="p-4 border-b border-rose-100 flex items-center justify-between bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-receipt text-base"></i>
+                    <h3 class="font-bold text-xs">ثبت سفارش و جزئیات پرداخت</h3>
+                </div>
+                <button onclick="closePaymentModal()" class="text-white hover:text-rose-100">
+                    <i class="fa-solid fa-circle-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- محتوای فاکتور و کارت بانکی -->
+            <div class="p-5 overflow-y-auto space-y-5 flex-grow custom-scroll">
+                
+                <!-- قیمت نهایی سفارش -->
+                <div class="p-3 bg-rose-50/50 border border-rose-100/50 rounded-2xl flex items-center justify-between text-xs">
+                    <span class="font-bold text-slate-600">مبلغ کل قابل پرداخت:</span>
+                    <span id="payment-modal-total" class="font-black text-brandPink-600 text-sm">۰ تومان</span>
+                </div>
+
+                <!-- طراحی لوکس کارت بانکی شهر (محمد صالح احمدنیا) -->
+                <div class="relative overflow-hidden rounded-3xl bg-gradient-to-tr from-rose-600 via-pink-600 to-orange-500 text-white p-5 shadow-lg space-y-5">
+                    <!-- طرح پس‌زمینه کارت -->
+                    <div class="absolute -right-10 -bottom-10 w-40 h-40 rounded-full bg-white/10 blur-xl"></div>
+                    <div class="absolute -left-6 -top-6 w-24 h-24 rounded-full bg-white/10 blur-lg"></div>
+                    
+                    <!-- بخش هدر کارت -->
+                    <div class="flex justify-between items-center relative z-10">
+                        <span class="text-[10px] tracking-widest font-bold opacity-80">بانک شهر</span>
+                        <i class="fa-solid fa-credit-card text-lg opacity-90"></i>
+                    </div>
+
+                    <!-- شماره کارت بانکی -->
+                    <div class="text-center py-2 relative z-10">
+                        <p class="text-xs text-rose-100 font-bold mb-1 opacity-85">شماره کارت جهت واریز</p>
+                        <h4 class="text-base md:text-lg font-black tracking-widest bg-white/15 py-1 px-3 rounded-xl inline-block" style="direction: ltr;">
+                            5022 - 2915 - 3334 - 7926
+                        </h4>
+                    </div>
+
+                    <!-- نام دارنده کارت -->
+                    <div class="flex justify-between items-center text-xs relative z-10 pt-1">
+                        <div>
+                            <span class="text-[9px] text-rose-100 block opacity-80">صاحب حساب</span>
+                            <span class="font-extrabold">محمد صالح احمدنیا</span>
+                        </div>
+                        <!-- تراشه طلایی فرضی کارت -->
+                        <div class="w-8 h-6 bg-gradient-to-tr from-yellow-300 to-yellow-500 rounded-md opacity-90"></div>
+                    </div>
+                </div>
+
+                <!-- دکمه کپی فوری شماره کارت -->
+                <button id="copy-card-btn" onclick="copyCardNumber()" class="w-full py-2.5 rounded-xl border-2 border-dashed border-brandPink-200 text-brandPink-600 font-bold text-xs hover:bg-rose-50 transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-copy"></i>
+                    کپی شماره کارت
+                </button>
+
+                <!-- پیام راهنما و دستورالعمل ارسال فیش -->
+                <div class="bg-amber-50/50 border border-amber-100 rounded-2xl p-3 text-[11px] text-slate-700 leading-relaxed space-y-1">
+                    <p class="font-extrabold text-amber-800">💡 بانوی گرامی، برای ثبت قطعی سفارش:</p>
+                    <p>خواهشمندیم مبلغ بالا را به شماره کارت فوق واریز کرده و سپس تصویر فیش واریزی خود را با کلیک روی یکی از پیام‌رسان‌های زیر برای ما ارسال نمایید تا همکاران ما فوراً سفارش شما را آماده و ارسال نمایند.</p>
+                </div>
+
+                <!-- دکمه‌های اتصال به روبیکا و واتساپ جهت ارسال فیش -->
+                <div class="grid grid-cols-1 gap-2.5 pt-2">
+                    <!-- اتصال به واتساپ -->
+                    <button onclick="sendReceiptToApp('whatsapp')" class="w-full py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        ارسال رسید بانکی به واتساپ
+                    </button>
+                    <!-- اتصال به روبیکا -->
+                    <button onclick="sendReceiptToApp('rubika')" class="w-full py-3.5 rounded-2xl bg-blue-500 hover:bg-blue-600 text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-base"></i>
+                        ارسال رسید بانکی به روبیکا
+                    </button>
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -290,7 +387,7 @@
                         </div>
                         <div>
                             <label class="block font-bold text-slate-600 mb-1">آدرس عکس محصول</label>
-                            <input id="admin-product-image" type="text" placeholder="مثال: Gemini_Generated_Image_b787jhb787jhb787.png" class="w-full p-2.5 rounded-xl border border-slate-200">
+                            <input id="admin-product-image" type="text" placeholder="مثال: Gemini_Generated_Image_b787jhb787jhb787_2.png" class="w-full p-2.5 rounded-xl border border-slate-200">
                         </div>
                     </div>
                     
@@ -308,9 +405,10 @@
         </div>
     </div>
 
+    <!-- -->
     <!-- بخش منطق و پردازش جاوا اسکریپت اپلیکیشن -->
     <script>
-        // دیتای اختصاصی جدید غرفه سلامت ثنابکر (با حذف موارد قبلی و طبق درخواست شما)
+        // دیتای اختصاصی جدید غرفه سلامت ثنابکر با تصویر جدید
         const initialProducts = [
             {
                 id: 1,
@@ -318,7 +416,7 @@
                 price: 750000,
                 usage: "روزی یک قاشق غذاخوری در وعده ناهار و یک قاشق غذاخوری در وعده شام",
                 duration: "هر بسته محصول برای مصرف 50 تا 60 روز است",
-                image: "Gemini_Generated_Image_b787jhb787jhb787.png"
+                image: "Gemini_Generated_Image_b787jhb787jhb787_2.png"
             }
         ];
 
@@ -357,7 +455,7 @@
             document.querySelector('main').scrollTop = 0;
         }
 
-        // رندر کردن محصولات ویترین در صفحه اصلی
+        // رندر کردن محصولات ویترین در صفحه اصلی با استایل کامل تصاویر
         function renderProducts() {
             const grid = document.getElementById('shop-products-grid');
             const totalBadge = document.getElementById('shop-total-badge');
@@ -370,9 +468,10 @@
                 
                 const card = `
                     <div class="bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                        <div class="relative h-64 bg-slate-100 overflow-hidden">
-                            <img src="${img}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x400/fff1f2/e11d48?text=Sanabekr';">
-                            <span class="absolute top-2 right-2 bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white text-[9px] font-black px-2.5 py-1 rounded-full shadow-sm">توصیه ثنابکر</span>
+                        <!-- کادر تصویر محصول - تنظیم شده روی نمایش بدون کشیدگی و برش برای عکس‌های دایره‌ای یا بشقابی -->
+                        <div class="relative h-72 md:h-80 bg-[#fdfaf8] overflow-hidden flex items-center justify-center p-3">
+                            <img src="${img}" alt="${p.name}" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/400x400/fff1f2/e11d48?text=Sanabekr';">
+                            <span class="absolute top-2 right-2 bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white text-[9px] font-black px-2.5 py-1 rounded-full shadow-sm">انتخاب ثنابکر</span>
                         </div>
                         
                         <div class="p-4 flex-grow flex flex-col justify-between space-y-3">
@@ -492,20 +591,72 @@
             renderCart();
         }
 
-        // فرمت و آماده‌سازی متن پیش‌فاکتور سفارش جهت ارسال نهایی به واتساپ
-        function sendOrderViaWhatsApp() {
+        //        // باز و بسته کردن مودال درگاه پرداخت و فاکتور
+        function openPaymentModal() {
             if (cart.length === 0) return;
             
-            let messageText = "سلام پیج محترم ثنابکر عزیز، قصد ثبت سفارش محصولات سلامت را دارم:\n\n";
+            // بستن دراور سبد خرید
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            drawer.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+
+            // محاسبه و نمایش قیمت نهایی
+            let grandTotal = 0;
+            cart.forEach(item => {
+                grandTotal += item.product.price * item.quantity;
+            });
+            document.getElementById('payment-modal-total').innerText = `${grandTotal.toLocaleString('fa-IR')} تومان`;
+
+            // نمایش مودال پرداخت
+            document.getElementById('payment-modal').classList.remove('hidden');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.add('hidden');
+        }
+
+        // عملکرد کپی ایمن شماره کارت بانکی به حافظه موبایل
+        function copyCardNumber() {
+            const cardNum = "5022291533347926";
+            const tempInput = document.createElement('input');
+            tempInput.value = cardNum;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // نمایش افکت لحظه‌ای کپی موفق
+            const btn = document.getElementById('copy-card-btn');
+            btn.innerHTML = `<i class="fa-solid fa-check text-green-500"></i> شماره کارت با موفقیت کپی شد!`;
+            btn.classList.add('bg-green-50', 'border-green-300', 'text-green-700');
+            
+            setTimeout(() => {
+                btn.innerHTML = `<i class="fa-solid fa-copy"></i> کپی شماره کارت`;
+                btn.classList.remove('bg-green-50', 'border-green-300', 'text-green-700');
+            }, 2500);
+        }
+
+        // هدایت مشتری به پیام‌رسان‌ها جهت ارسال عکس فیش پرداخت
+        function sendReceiptToApp(platform) {
+            let orderSummary = "سلام، فیش واریز بابت سفارش محصولات ثنابکر خدمت شما:\n\n";
             let total = 0;
             cart.forEach(item => {
-                messageText += `🔹 ${item.product.name} (${item.quantity} عدد) - قیمت هر بسته: ${item.product.price.toLocaleString('fa-IR')} تومان\n`;
+                orderSummary += `🔸 ${item.product.name} (${item.quantity} عدد)\n`;
                 total += item.product.price * item.quantity;
             });
-            messageText += `\nجمع کل خرید من بانو: ${total.toLocaleString('fa-IR')} تومان\n\nلطفاً بابت شیوه پرداخت و هماهنگی ارسال من را راهنمایی بفرمایید. سپاسگزارم 🌸`;
+            orderSummary += `\n💵 جمع کل پرداخت شده: ${total.toLocaleString('fa-IR')} تومان\n\n(عکس رسید پرداخت پیوست شده است) 🌸`;
             
-            const encodedText = encodeURIComponent(messageText);
-            window.open(`https://wa.me/989123456789?text=${encodedText}`, '_blank');
+            const phone = "09361537997";
+            const encodedText = encodeURIComponent(orderSummary);
+
+            if (platform === 'whatsapp') {
+                // ارسال رسید در واتساپ
+                window.open(`https://wa.me/989361537997?text=${encodedText}`, '_blank');
+            } else if (platform === 'rubika') {
+                // ارسال رسید در روبیکا (هدایت مستقیم به چت شماره اعلام شده)
+                window.open(`https://rubika.ir/${phone}`, '_blank');
+            }
         }
 
         // بخش مدیریت چت‌بات صمیمی
@@ -606,7 +757,7 @@
             }
         }
 
-        // متصل شدن به موتور هوش مصنوعی Gemini 3 Flash
+        //        // متصل شدن به موتور هوش مصنوعی Gemini 3 Flash
         async function getAIResponse(userText) {
             const typingIndicator = showTypingIndicator();
             
