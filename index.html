@@ -35,15 +35,13 @@
             }
         }
     </script>
-    <!-- Google Fonts & Custom Font Style for Pelak Fallback -->
+    <!-- Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* پیاده‌سازی فونت پلاک با دیتای فونت‌های استاندارد وب فارسی */
         @font-face {
             font-family: 'Pelak';
             src: local('Pelak'), local('Pelak-Regular'), url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazirmatn-Regular.woff2') format('woff2');
@@ -61,7 +59,6 @@
             -webkit-tap-highlight-color: transparent;
         }
         
-        /* استایل اختصاصی اسکرول‌بار */
         .custom-scroll::-webkit-scrollbar {
             width: 5px;
             height: 5px;
@@ -74,7 +71,6 @@
             border-radius: 10px;
         }
         
-        /* ترنزیشن جابجایی تب‌ها */
         .page-transition {
             transition: all 0.25s ease-in-out;
         }
@@ -397,7 +393,7 @@
                                     <button onclick="addToCart(${p.id})" class="py-2 px-1 rounded-xl bg-gradient-to-r from-brandPink-500 to-brandPink-600 text-white text-[10px] font-bold shadow-sm hover:opacity-95 transition flex items-center justify-center gap-1">
                                         <i class="fa-solid fa-basket-plus text-[11px]"></i> سفارش
                                     </button>
-                                    <button onclick="askAboutProductInChat(${p.id})" class="py-2 px-1 rounded-xl border border-brandOrange-200 text-brandOrange-600 hover:bg-brandOrange-50 text-[10px] font-bold transition flex items-center justify-center gap-1">
+                                    <button onclick="askAboutProductInChat(${p.id})" class="py-2 px-1 rounded-xl border border-brandOrange-200 text-brandOrange-600 hover:bg-brandOrange-50 text-[10px] font-bold transition flex-shrink-0 flex items-center justify-center gap-1">
                                         <i class="fa-solid fa-comment-medical text-[11px]"></i> مشاوره
                                     </button>
                                 </div>
