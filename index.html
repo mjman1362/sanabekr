@@ -1,35 +1,444 @@
-<!-- ... existing code ... -->
-        <script>
-            // دیتای اختصاصی جدید غرفه سلامت ثنابکر با تصاویر به‌روزرسانی شده و دقیق
-            const initialProducts = [
-                {
-                    id: 1,
-                    name: "ساشه فیبر مولتی ویتامینه",
-                    price: 750000,
-                    usage: "روزی یک قاشق غذاخوری در وعده ناهار و یک قاشق غذاخوری در وعده شام",
-                    duration: "هر بسته محصول برای مصرف 50 تا 60 روز است",
-                    image: "Gemini_Generated_Image_b787jhb787jhb787_4.png"
-                },
-                {
-                    id: 2,
-                    name: "دسر آنتی اکسیدانی",
-                    price: 670000,
-                    usage: "یک حبه همراه با ناهار و یک حبه همراه با شام",
-                    duration: "برای مصرف 25 تا 30 روز",
-                    image: "Gemini_Generated_Image_lxpgdqlxpgdqlxpg_2.png"
-                },
-                {
-                    id: 3,
-                    name: "مام",
-                    price: 800000,
-                    usage: "بعد از هر استحمام",
-                    duration: "50 میل",
-                    image: "Gemini_Generated_Image_owbnzdowbnzdowbn_2.png"
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ثنابکر | رسانه سلامت بانوان</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandPink: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                        },
+                        brandOrange: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Pelak', 'Vazirmatn', 'Tahoma', 'sans-serif'],
+                    }
                 }
-            ];
+            }
+        }
+    </script>
+    <!-- Google Fonts & Custom Font Style for Pelak Fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @font-face {
+            font-family: 'Pelak';
+            src: local('Pelak'), local('Pelak-Regular'), url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Pelak';
+            src: local('Pelak-Bold'), url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazirmatn-Bold.woff2') format('woff2');
+            font-weight: bold;
+        }
+        
+        body {
+            font-family: 'Pelak', 'Vazirmatn', sans-serif;
+            background-color: #fcf6f5;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .custom-scroll::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(244, 63, 94, 0.05);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #f43f5e;
+            border-radius: 10px;
+        }
 
-            let products = [];
-// ... existing code ...
+        .page-transition {
+            transition: all 0.25s ease-in-out;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.97); }
+        }
+        .blink-text {
+            animation: blink 2s infinite;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col justify-between overflow-hidden text-slate-800">
+
+    <!-- هدر بالای صفحه -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-rose-100 px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brandPink-500 to-brandOrange-500 flex items-center justify-center text-white shadow-md">
+                <i class="fa-solid fa-leaf text-base"></i>
+            </div>
+            <div>
+                <h1 class="font-extrabold text-xs md:text-sm bg-gradient-to-r from-brandPink-600 to-brandOrange-600 bg-clip-text text-transparent">ثنابکر</h1>
+                <p class="text-[9px] text-brandOrange-600 font-bold">رسانه سلامت بانوان</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <!-- متن متحرک راهنمای اینستاگرام -->
+            <span class="blink-text text-[10px] font-bold text-brandPink-600 hidden xs:inline-block">آدرس پیج اینستاگرام ما ←</span>
+            
+            <!-- لینک اینستاگرام -->
+            <a href="https://instagram.com/sanabekr" target="_blank" class="flex items-center gap-1 bg-gradient-to-r from-purple-600 to-pink-500 hover:opacity-90 text-white text-[10px] font-bold py-1.5 px-2.5 rounded-full shadow-sm transition-all">
+                <i class="fa-brands fa-instagram text-xs"></i>
+                <span>@sanabekr</span>
+            </a>
+            
+            <!-- مدیریت غرفه -->
+            <button onclick="toggleAdminPanel()" class="p-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all" title="مدیریت غرفه">
+                <i class="fa-solid fa-sliders text-sm"></i>
+            </button>
+
+            <!-- سبد خرید -->
+            <button onclick="toggleCartDrawer()" class="relative p-2 rounded-full bg-rose-50 text-brandPink-600 hover:bg-rose-100 transition-all">
+                <i class="fa-solid fa-bag-shopping text-base"></i>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- بخش اصلی محتوا -->
+    <main class="flex-grow overflow-y-auto custom-scroll pb-20 relative">
+        
+        <!-- تب اول: فروشگاه -->
+        <div id="tab-shop" class="page-transition p-4 space-y-5">
+            <!-- بنر گرافیکی شیک -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-tr from-brandPink-500 via-rose-500 to-brandOrange-500 text-white p-5 shadow-lg">
+                <div class="relative z-10 space-y-2">
+                    <div class="inline-flex items-center gap-1 bg-white/20 px-3 py-1 rounded-full text-[9px] font-bold">
+                        <i class="fa-solid fa-sparkles text-yellow-300"></i> رسانه سلامت و زیبایی بانوان
+                    </div>
+                    <h2 class="text-base md:text-lg font-black">غرفه رسمی ارگانیک ثنابکر</h2>
+                    <p class="text-[10px] text-rose-100 font-light leading-relaxed">بکرترین و خالص‌ترین محصولات درمانی را مستقیماً از ما تهیه کنید و برای مشاوره رایگان وارد تب مشاور هوشمند شوید.</p>
+                </div>
+            </div>
+
+            <!-- هدر بخش محصولات -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-5 rounded-full bg-brandPink-500"></span>
+                    <h3 class="font-extrabold text-xs text-slate-800">ویترین محصولات ثنابکر</h3>
+                </div>
+                <span id="shop-total-badge" class="text-[9px] font-bold bg-rose-100 text-brandPink-600 px-2.5 py-1 rounded-full">۳ محصول فعال</span>
+            </div>
+
+            <!-- گرید محصولات -->
+            <div id="shop-products-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- محصولات با جاوااسکریپت رندر می‌شوند -->
+            </div>
+        </div>
+
+        <!-- تب دوم: چت‌بات مشاور هوشمند -->
+        <div id="tab-chat" class="page-transition hidden h-full flex flex-col">
+            <div class="flex flex-col h-[calc(100vh-140px)] bg-rose-50/20">
+                <div class="bg-gradient-to-r from-brandPink-50 to-brandOrange-50 p-3 border-b border-rose-100/60 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-brandPink-500 to-brandOrange-500 text-white flex items-center justify-center text-sm relative">
+                            🤖
+                            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border border-white rounded-full"></span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs text-slate-800">مشاور هوشمند ثنابکر</h4>
+                            <p class="text-[9px] text-slate-500">پاسخ به سوالات درمانی، قیمت و نحوه مصرف</p>
+                        </div>
+                    </div>
+                    <button onclick="clearChatMessages()" class="text-slate-400 hover:text-brandPink-500 p-1.5 transition">
+                        <i class="fa-solid fa-trash-can text-xs" title="پاک کردن گفتگو"></i>
+                    </button>
+                </div>
+
+                <!-- باکس پیام‌ها -->
+                <div id="chat-messages-container" class="flex-grow p-4 overflow-y-auto space-y-4 custom-scroll">
+                    <div class="flex items-start gap-2.5 max-w-[85%]">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white flex items-center justify-center text-xs flex-shrink-0">🤖</div>
+                        <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm text-xs leading-relaxed text-slate-700">
+                            سلام بانو جان! به رسانه سلامت ثنابکر خوش آمدید. 🌸
+                            <br>من مشاور صمیمی شما هستم. درباره **قیمت‌ها، نحوه مصرف** یا **میزان کارایی و حجم مصرفی هر بسته** هر سوالی دارید بپرسید تا با عشق راهنمایی‌تان کنم!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- میانبرهای متداول -->
+                <div class="px-2 py-1.5 bg-white/70 border-t border-rose-100/50 flex gap-2 overflow-x-auto whitespace-nowrap custom-scroll">
+                    <button onclick="askBotQuickTag('قیمت محصولات')" class="px-3 py-1.5 rounded-full bg-brandPink-50 text-brandPink-600 hover:bg-brandPink-100 text-[9px] font-bold transition flex-shrink-0">💰 قیمت محصولات</button>
+                    <button onclick="askBotQuickTag('طرز مصرف دسر آنتی اکسیدانی')" class="px-3 py-1.5 rounded-full bg-brandOrange-50 text-brandOrange-600 hover:bg-brandOrange-100 text-[9px] font-bold transition flex-shrink-0">💡 طرز مصرف دسر</button>
+                    <button onclick="askBotQuickTag('ساشه فیبر مولتی ویتامینه چیست؟')" class="px-3 py-1.5 rounded-full bg-purple-50 text-purple-600 hover:bg-purple-100 text-[9px] font-bold transition flex-shrink-0">🌿 فیبر مولتی ویتامینه</button>
+                </div>
+
+                <!-- ورودی پیام -->
+                <form id="chat-input-form" onsubmit="handleChatSubmit(event)" class="p-3 bg-white border-t border-rose-100 flex items-center gap-2">
+                    <input id="chat-input-field" type="text" placeholder="سوال خود را صمیمانه بپرسید..." class="flex-grow text-xs px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brandPink-500 transition-all" required>
+                    <button type="submit" class="w-10 h-10 rounded-full bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white flex items-center justify-center hover:opacity-90 active:scale-95 transition flex-shrink-0">
+                        <i class="fa-solid fa-paper-plane transform rotate-180 text-xs"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- منوی پایینی -->
+    <nav class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-rose-100 py-2.5 px-6 flex justify-around items-center z-40 shadow-lg">
+        <button onclick="changeTab('shop')" id="btn-tab-shop" class="flex flex-col items-center gap-1 text-brandPink-600 transition-all">
+            <i class="fa-solid fa-shop text-base"></i>
+            <span class="text-[9px] font-black">ویترین غرفه</span>
+        </button>
+        
+        <button onclick="changeTab('chat')" id="btn-tab-chat" class="flex flex-col items-center gap-1 text-slate-400 transition-all">
+            <i class="fa-solid fa-comment-dots text-base"></i>
+            <span class="text-[9px] font-black">مشاور هوشمند</span>
+        </button>
+    </nav>
+
+    <!-- لایه تاریک پشت سبد خرید -->
+    <div id="cart-overlay" onclick="toggleCartDrawer()" class="fixed inset-0 bg-black/40 backdrop-blur-xs hidden z-50 transition-opacity"></div>
+    
+    <!-- دراور سبد خرید -->
+    <div id="cart-drawer" class="fixed inset-y-0 left-0 z-50 w-full max-w-sm bg-white shadow-2xl border-r border-rose-100 transform -translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-4 border-b border-rose-100 flex items-center justify-between bg-gradient-to-r from-brandPink-50 to-brandOrange-50">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-basket-shopping text-brandPink-600 text-sm"></i>
+                <h4 class="font-black text-xs text-slate-800">سبد خرید شما</h4>
+            </div>
+            <button onclick="toggleCartDrawer()" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-400 hover:text-slate-600 shadow-sm transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div id="cart-items-container" class="flex-grow p-4 overflow-y-auto space-y-3 custom-scroll">
+            <!-- اقلام سبد خرید -->
+        </div>
+
+        <div class="p-4 border-t border-rose-100 bg-slate-50 space-y-4">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                <span>جمع کل سفارش:</span>
+                <span id="cart-total-price" class="text-brandPink-600 font-extrabold">۰ تومان</span>
+            </div>
+            <button onclick="openPaymentModal()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white font-extrabold text-xs shadow-md hover:opacity-95 transition-all">
+                تایید سفارش و پرداخت کارت به کارت
+            </button>
+        </div>
+    </div>
+
+    <!-- مودال پرداخت هوشمند کارت به کارت -->
+    <div id="payment-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden flex flex-col p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-rose-100 pb-3">
+                <div class="flex items-center gap-2 text-brandPink-600">
+                    <i class="fa-solid fa-credit-card text-base"></i>
+                    <h4 class="font-extrabold text-xs">پرداخت فاکتور ثنابکر</h4>
+                </div>
+                <button onclick="closePaymentModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-circle-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- نمایش فاکتور نهایی -->
+            <div class="bg-rose-50/40 p-3.5 rounded-2xl border border-rose-100/30 text-xs text-slate-700 space-y-1.5">
+                <div class="flex justify-between">
+                    <span>مبلغ کل فاکتور:</span>
+                    <span id="payment-total-price" class="font-black text-brandPink-600">۰ تومان</span>
+                </div>
+                <p class="text-[9px] text-slate-400 leading-relaxed">خواهشمند است مبلغ فاکتور را به شماره کارت زیر واریز کرده و دکمه ارسال رسید پیام‌رسان دلخواه خود را لمس کنید.</p>
+            </div>
+
+            <!-- فیلد شماره کارت با قابلیت کپی آسان -->
+            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 text-center space-y-2">
+                <span class="text-[10px] text-slate-500 font-bold block">شماره کارت بانک ملی</span>
+                <span id="card-number-text" class="text-base font-black text-slate-800 tracking-widest block">۵۰۲۲۲۹۱۵۳۳۳۴۷۹۲۶</span>
+                <span class="text-[10px] text-brandOrange-600 font-bold block">به نام محمد صالح احمدنیا</span>
+                
+                <button onclick="copyCardNumber()" class="inline-flex items-center gap-1.5 bg-white text-slate-600 hover:text-brandPink-500 border border-slate-300 px-3 py-1.5 rounded-xl text-[10px] font-bold shadow-xs transition">
+                    <i id="copy-icon" class="fa-solid fa-copy"></i>
+                    <span id="copy-btn-text">کپی شماره کارت</span>
+                </button>
+            </div>
+
+            <!-- راهنمای ارسال فیش -->
+            <div class="text-center text-[10px] text-slate-500 leading-relaxed">
+                ⚠️ بانو جان، لطفا پس از پرداخت، تصویر فیش واریزی خود را جهت ارسال سفارش از طریق دکمه‌های زیر برای ما ارسال بفرمایید:
+            </div>
+
+            <!-- دکمه‌های ارسال پیام‌رسان -->
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="sendReceipt('whatsapp')" class="py-3 rounded-2xl bg-[#25D366] text-white font-extrabold text-[10px] shadow-sm hover:opacity-90 transition flex items-center justify-center gap-1.5">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> ارسال رسید به واتساپ
+                </button>
+                <button onclick="sendReceipt('rubika')" class="py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-extrabold text-[10px] shadow-sm hover:opacity-90 transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-paper-plane text-xs"></i> ارسال رسید به روبیکا
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال امنیتی مدیریت محصولات (قفل داخلی) -->
+    <div id="admin-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+            
+            <!-- مرحله ۱: گیت احراز هویت داخلی -->
+            <div id="admin-auth-gate" class="p-6 space-y-4 text-center">
+                <div class="w-12 h-12 rounded-full bg-rose-50 text-brandPink-600 flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-sm text-slate-800">احراز هویت مدیریت ثنابکر</h3>
+                    <p class="text-[10px] text-slate-400">رمز عبور اختصاصی را وارد نمایید</p>
+                </div>
+                <div class="space-y-3">
+                    <input id="admin-password-input" type="password" placeholder="رمز عبور..." class="w-full text-center text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brandPink-500">
+                    <div id="admin-auth-error" class="text-[10px] text-red-500 font-bold hidden">رمز عبور وارد شده اشتباه است!</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="authenticateAdmin()" class="py-2.5 rounded-xl bg-brandPink-500 text-white font-bold text-xs hover:bg-brandPink-600 transition">تایید رمز</button>
+                        <button onclick="toggleAdminPanel()" class="py-2.5 rounded-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition">انصراف</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مرحله ۲: پنل مدیریت محصولات (پس از تایید رمز) -->
+            <div id="admin-panel-content" class="hidden flex flex-col max-h-[80vh]">
+                <div class="p-4 border-b border-rose-50 flex items-center justify-between bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-xs"></i>
+                        <h3 class="font-bold text-xs">مدیریت غرفه ثنابکر</h3>
+                    </div>
+                    <button onclick="toggleAdminPanel()" class="text-white hover:text-rose-100">
+                        <i class="fa-solid fa-circle-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <div class="p-5 overflow-y-auto space-y-5 flex-grow custom-scroll">
+                    <!-- فرم افزودن محصول -->
+                    <div class="bg-rose-50/40 p-4 rounded-2xl border border-rose-100/30 space-y-3">
+                        <h4 class="font-extrabold text-xs text-brandPink-600"><i class="fa-solid fa-plus-circle ml-1"></i> افزودن محصول جدید</h4>
+                        <div class="space-y-2 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">نام محصول</label>
+                                <input id="admin-p-name" type="text" placeholder="مثال: دمنوش ارگانیک" class="w-full p-2.5 rounded-xl border border-slate-200">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">قیمت (تومان)</label>
+                                <input id="admin-p-price" type="number" placeholder="مثال: 600000" class="w-full p-2.5 rounded-xl border border-slate-200">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">نحوه مصرف</label>
+                                <input id="admin-p-usage" type="text" placeholder="مثال: روزی یک بار قبل از خواب" class="w-full p-2.5 rounded-xl border border-slate-200">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">حجم محصول (مانند: برای ۵۰ روز)</label>
+                                <input id="admin-p-duration" type="text" placeholder="مثال: ۵۰ میل" class="w-full p-2.5 rounded-xl border border-slate-200">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">آدرس عکس محصول (نام فایل یا لینک)</label>
+                                <input id="admin-p-image" type="text" placeholder="نام دقیق فایل عکس یا آدرس اینترنتی..." class="w-full p-2.5 rounded-xl border border-slate-200">
+                            </div>
+                        </div>
+                        <button onclick="saveNewProduct()" class="w-full py-2.5 rounded-xl bg-brandPink-500 text-white font-bold text-xs hover:bg-brandPink-600 transition shadow-sm">ذخیره محصول</button>
+                    </div>
+
+                    <!-- لیست محصولات فعال جهت حذف -->
+                    <div class="space-y-2">
+                        <h4 class="font-extrabold text-xs text-slate-700"><i class="fa-solid fa-list-check ml-1"></i> محصولات فعال در غرفه</h4>
+                        <div id="admin-product-list-container" class="space-y-2">
+                            <!-- به کمک جاوااسکریپت لود می‌شود -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- اسکریپت‌های پردازشی وب‌اپلیکیشن -->
+    <script>
+        // دیتای اختصاصی محصولات به همراه فایل‌های ارسالی شما بانو جان
+        const defaultProducts = [
+            {
+                id: 1,
+                name: "ساشه فیبر مولتی ویتامینه",
+                price: 750000,
+                usage: "روزی یک قاشق غذاخوری در وعده ناهار و یک قاشق غذاخوری در وعده شام",
+                duration: "هر بسته محصول برای مصرف 50 تا 60 روز است",
+                image: "Gemini_Generated_Image_b787jhb787jhb787_4.png"
+            },
+            {
+                id: 2,
+                name: "دسر آنتی اکسیدانی",
+                price: 670000,
+                usage: "یک حبه همراه با ناهار و یک حبه همراه با شام",
+                duration: "برای مصرف 25 تا 30 روز",
+                image: "Gemini_Generated_Image_lxpgdqlxpgdqlxpg_2.png"
+            },
+            {
+                id: 3,
+                name: "مام",
+                price: 800000,
+                usage: "بعد از هر استحمام",
+                duration: "50 میل",
+                image: "Gemini_Generated_Image_owbnzdowbnzdowbn_2.png"
+            }
+        ];
+
+        let products = [];
+        let cart = [];
+        let isAdminAuthenticated = false;
+
+        window.onload = function() {
+            // بارگذاری از حافظه مرورگر جهت تعاملی بودن کامل پنل مدیریت
+            if (!localStorage.getItem('sanabekr_products')) {
+                localStorage.setItem('sanabekr_products', JSON.stringify(defaultProducts));
+            }
+            products = JSON.parse(localStorage.getItem('sanabekr_products'));
+            
+            renderProducts();
+            updateCartBadge();
+            renderCart();
+        };
+
+        // تغییر تب‌ها
+        function changeTab(tabId) {
+            const tabs = ['shop', 'chat'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`btn-tab-${t}`);
+                if (t === tabId) {
+                    el.classList.remove('hidden');
+                    btn.classList.add('text-brandPink-600');
+                    btn.classList.remove('text-slate-400');
+                } else {
+                    el.classList.add('hidden');
+                    btn.classList.remove('text-brandPink-600');
+                    btn.classList.add('text-slate-400');
+                }
+            });
+            document.querySelector('main').scrollTop = 0;
+        }
+
+        // رندر محصولات در ویترین
         function renderProducts() {
             const grid = document.getElementById('shop-products-grid');
             const totalBadge = document.getElementById('shop-total-badge');
@@ -38,13 +447,14 @@
             totalBadge.innerText = `${products.length} محصول فعال`;
 
             products.forEach(p => {
-                const img = p.image || 'https://placehold.co/400x400/fff1f2/e11d48?text=Sanabekr';
+                // تعیین برچسب بر اساس نوع محصول
+                const labelText = p.name.includes("ساشه") ? "بهای درمانی" : "قیمت محصول";
                 
                 const card = `
                     <div class="bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                        <!-- کادر تصویر محصول - تنظیم شده روی نمایش بدون کشیدگی و برش برای عکس‌های دایره‌ای یا بشقابی -->
-                        <div class="relative h-72 md:h-80 bg-[#fdfaf8] overflow-hidden flex items-center justify-center p-3">
-                            <img src="${img}" alt="${p.name}" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/400x400/fff1f2/e11d48?text=Sanabekr';">
+                        <!-- کادر عکس محصول بهینه شده جهت عدم کشیدگی تصاویر دایره‌ای و بشقاب -->
+                        <div class="relative h-64 xs:h-72 bg-[#faf7f5] overflow-hidden flex items-center justify-center p-3">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/400x400/fff1f2/e11d48?text=Sanabekr';">
                             <span class="absolute top-2 right-2 bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white text-[9px] font-black px-2.5 py-1 rounded-full shadow-sm">انتخاب ثنابکر</span>
                         </div>
                         
@@ -59,14 +469,14 @@
                             
                             <div class="pt-2 border-t border-slate-50 flex flex-col space-y-2">
                                 <div class="flex items-center justify-between text-xs">
-                                    <span class="text-[10px] text-slate-400 font-bold">${p.name.includes('ساشه') ? 'بهای درمانی' : 'قیمت محصول'}</span>
+                                    <span class="text-[10px] text-slate-400 font-bold">${labelText}</span>
                                     <span class="font-black text-brandPink-600 text-[13px]">${p.price.toLocaleString('fa-IR')} <span class="text-[9px] font-normal">تومان</span></span>
                                 </div>
                                 <div class="grid grid-cols-2 gap-1.5">
                                     <button onclick="addToCart(${p.id})" class="py-2 px-1 rounded-xl bg-gradient-to-r from-brandPink-500 to-brandPink-600 text-white text-[10px] font-bold shadow-sm hover:opacity-95 transition flex items-center justify-center gap-1">
                                         <i class="fa-solid fa-basket-plus text-[11px]"></i> سفارش
                                     </button>
-                                    <button onclick="askAboutProductInChat(${p.id})" class="py-2 px-1 rounded-xl border border-brandOrange-200 text-brandOrange-600 hover:bg-brandOrange-50 text-[10px] font-bold transition flex-shrink-0 flex items-center justify-center gap-1">
+                                    <button onclick="askAboutProductInChat(${p.id})" class="py-2 px-1 rounded-xl border border-brandOrange-200 text-brandOrange-600 hover:bg-brandOrange-50 text-[10px] font-bold transition flex items-center justify-center gap-1">
                                         <i class="fa-solid fa-comment-medical text-[11px]"></i> مشاوره
                                     </button>
                                 </div>
@@ -77,4 +487,444 @@
                 grid.innerHTML += card;
             });
         }
-// ... existing code ...
+
+        // توابع سبد خرید و فاکتور
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            drawer.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.product.id === productId);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ product, quantity: 1 });
+            }
+
+            updateCartBadge();
+            renderCart();
+            toggleCartDrawer();
+        }
+
+        function updateCartBadge() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').innerText = count.toLocaleString('fa-IR');
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const totalSpan = document.getElementById('cart-total-price');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-slate-400 flex flex-col items-center gap-2">
+                        <i class="fa-solid fa-basket-shopping text-4xl text-rose-100"></i>
+                        <span class="text-[10px]">سبد خرید شما بانو جان خالی است.</span>
+                    </div>
+                `;
+                totalSpan.innerText = '۰ تومان';
+                return;
+            }
+
+            container.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const subtotal = item.product.price * item.quantity;
+                total += subtotal;
+
+                container.innerHTML += `
+                    <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-100 relative">
+                        <img src="${item.product.image}" class="w-10 h-10 rounded-xl object-cover flex-shrink-0" onerror="this.onerror=null; this.src='https://placehold.co/100x100/fff1f2/e11d48?text=Sanabekr';">
+                        <div class="flex-grow min-w-0">
+                            <h5 class="font-bold text-xs text-slate-800 truncate">${item.product.name}</h5>
+                            <span class="text-[10px] text-brandPink-600 font-bold">${item.product.price.toLocaleString('fa-IR')} تومان</span>
+                        </div>
+                        <div class="flex items-center gap-1 bg-white px-2 py-1 rounded-lg border border-slate-200 flex-shrink-0">
+                            <button onclick="changeQuantity(${index}, 1)" class="text-slate-500 hover:text-brandPink-500 p-0.5"><i class="fa-solid fa-plus text-[9px]"></i></button>
+                            <span class="text-xs font-bold text-slate-700 w-4 text-center">${item.quantity.toLocaleString('fa-IR')}</span>
+                            <button onclick="changeQuantity(${index}, -1)" class="text-slate-500 hover:text-brandPink-500 p-0.5"><i class="fa-solid fa-minus text-[9px]"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            totalSpan.innerText = `${total.toLocaleString('fa-IR')} تومان`;
+        }
+
+        function changeQuantity(index, val) {
+            cart[index].quantity += val;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartBadge();
+            renderCart();
+        }
+
+        // توابع پرداخت کارت به کارت فاکتور نهایی
+        function openPaymentModal() {
+            if (cart.length === 0) return;
+            
+            let total = 0;
+            cart.forEach(item => total += item.product.price * item.quantity);
+
+            document.getElementById('payment-total-price').innerText = `${total.toLocaleString('fa-IR')} تومان`;
+            document.getElementById('payment-modal').classList.remove('hidden');
+            toggleCartDrawer();
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.add('hidden');
+        }
+
+        function copyCardNumber() {
+            const cardNum = "5022291533347926";
+            
+            // کپی سازگار با ای‌فریم و مرورگرها
+            const el = document.createElement('textarea');
+            el.value = cardNum;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            const icon = document.getElementById('copy-icon');
+            const text = document.getElementById('copy-btn-text');
+
+            icon.className = "fa-solid fa-check text-green-500 animate-bounce";
+            text.innerText = "شماره کارت کپی شد!";
+            text.className = "text-green-600 font-extrabold";
+
+            setTimeout(() => {
+                icon.className = "fa-solid fa-copy";
+                text.innerText = "کپی شماره کارت";
+                text.className = "text-slate-600 font-bold";
+            }, 2500);
+        }
+
+        // ارسال فاکتور به پیام‌رسان‌ها به شماره 09361537997
+        function sendReceipt(platform) {
+            let total = 0;
+            let orderText = "🌸 سلام پیج محترم ثنابکر، من سفارشم را از طریق اپلیکیشن آماده کردم:\n\n";
+            
+            cart.forEach(item => {
+                orderText += `🔹 ${item.product.name} (تعداد: ${item.quantity} عدد)\n`;
+                total += item.product.price * item.quantity;
+            });
+
+            orderText += `\n💵 جمع کل خرید من: ${total.toLocaleString('fa-IR')} تومان\n💳 واریز به نام محمد صالح احمدنیا انجام شد.\n\nرسید بانکی پرداخت را برای تایید ارسال می‌کنم. لطفاً بررسی بفرمایید 🌺`;
+
+            if (platform === 'whatsapp') {
+                const url = `https://wa.me/989361537997?text=${encodeURIComponent(orderText)}`;
+                window.open(url, '_blank');
+            } else if (platform === 'rubika') {
+                // انتقال به روبیکا وب یا اپلیکیشن برای ارتباط با شماره مورد نظر
+                // از آنجا که روبیکا لینک مستقیم چت با شماره ندارد، به سایت روبیکا هدایت کرده و اطلاعات را جهت ارسال آسان کپی می‌کنیم
+                const el = document.createElement('textarea');
+                el.value = orderText;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                
+                alert("بانو جان، فاکتور خرید شما کپی شد! اکنون به پیام‌رسان روبیکا منتقل می‌شوید. لطفاً فاکتور را در صفحه گفتگوی شماره ۰۹۳۶۱۵۳۷۹۹۷ چسبانده (Paste) و ارسال کنید.");
+                window.open("https://rubika.ir", '_blank');
+            }
+        }
+
+        // مدیریت پنل امنیتی
+        function toggleAdminPanel() {
+            const modal = document.getElementById('admin-modal');
+            modal.classList.toggle('hidden');
+            
+            if (modal.classList.contains('hidden')) {
+                // ریست کردن قفل هنگام بستن مودال
+                isAdminAuthenticated = false;
+                document.getElementById('admin-auth-gate').classList.remove('hidden');
+                document.getElementById('admin-panel-content').classList.add('hidden');
+                document.getElementById('admin-password-input').value = '';
+                document.getElementById('admin-auth-error').classList.add('hidden');
+            }
+        }
+
+        function authenticateAdmin() {
+            const pwd = document.getElementById('admin-password-input').value;
+            if (pwd === "sanabekr120") {
+                isAdminAuthenticated = true;
+                document.getElementById('admin-auth-gate').classList.add('hidden');
+                document.getElementById('admin-panel-content').classList.remove('hidden');
+                renderAdminProducts();
+            } else {
+                document.getElementById('admin-auth-error').classList.remove('hidden');
+            }
+        }
+
+        function renderAdminProducts() {
+            const container = document.getElementById('admin-product-list-container');
+            container.innerHTML = '';
+            products.forEach(p => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl border border-slate-200 text-xs">
+                        <div>
+                            <h5 class="font-bold text-slate-800">${p.name}</h5>
+                            <span class="text-[10px] text-brandPink-500 font-bold">${p.price.toLocaleString('fa-IR')} تومان</span>
+                        </div>
+                        <button onclick="deleteProduct(${p.id})" class="text-[10px] px-3 py-1.5 rounded-lg bg-red-50 text-red-600 font-bold hover:bg-red-100 transition">حذف</button>
+                    </div>
+                `;
+            });
+        }
+
+        function saveNewProduct() {
+            const name = document.getElementById('admin-p-name').value.trim();
+            const price = parseFloat(document.getElementById('admin-p-price').value);
+            const usage = document.getElementById('admin-p-usage').value.trim();
+            const duration = document.getElementById('admin-p-duration').value.trim();
+            const image = document.getElementById('admin-p-image').value.trim();
+
+            if (!name || isNaN(price) || !usage || !duration) {
+                alert('لطفاً اطلاعات محصول را کامل وارد نمایید.');
+                return;
+            }
+
+            const newProduct = {
+                id: Date.now(),
+                name,
+                price,
+                usage,
+                duration,
+                image: image || 'https://placehold.co/400x400/fff1f2/e11d48?text=Sanabekr'
+            };
+
+            products.push(newProduct);
+            localStorage.setItem('sanabekr_products', JSON.stringify(products));
+
+            document.getElementById('admin-p-name').value = '';
+            document.getElementById('admin-p-price').value = '';
+            document.getElementById('admin-p-usage').value = '';
+            document.getElementById('admin-p-duration').value = '';
+            document.getElementById('admin-p-image').value = '';
+
+            renderProducts();
+            renderAdminProducts();
+            toggleAdminPanel();
+        }
+
+        function deleteProduct(productId) {
+            products = products.filter(p => p.id !== productId);
+            localStorage.setItem('sanabekr_products', JSON.stringify(products));
+            renderProducts();
+            renderAdminProducts();
+        }
+
+        // بخش پردازش‌های چت‌بات و هوش مصنوعی
+        const messagesContainer = document.getElementById('chat-messages-container');
+
+        function appendMessage(sender, text, isHtml = false) {
+            const bubble = document.createElement('div');
+            bubble.className = `flex items-start gap-2.5 max-w-[85%] ${sender === 'user' ? 'mr-auto flex-row-reverse' : ''}`;
+            
+            const avatar = sender === 'user'
+                ? `<div class="w-7 h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[10px] flex-shrink-0"><i class="fa-solid fa-user"></i></div>`
+                : `<div class="w-7 h-7 rounded-full bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white flex items-center justify-center text-xs flex-shrink-0">🤖</div>`;
+
+            const bgClass = sender === 'user'
+                ? 'bg-gradient-to-tr from-brandPink-500 to-brandOrange-500 text-white rounded-2xl rounded-tl-none'
+                : 'bg-white text-slate-700 rounded-2xl rounded-tr-none border border-rose-100 shadow-xs';
+
+            bubble.innerHTML = `
+                ${avatar}
+                <div class="${bgClass} p-3 text-xs leading-relaxed">
+                    ${isHtml ? text : text.replace(/\n/g, '<br>')}
+                </div>
+            `;
+            messagesContainer.appendChild(bubble);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function clearChatMessages() {
+            messagesContainer.innerHTML = `
+                <div class="flex items-start gap-2.5 max-w-[85%]">
+                    <div class="w-7 h-7 rounded-full bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white flex items-center justify-center text-xs flex-shrink-0">🤖</div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm text-xs leading-relaxed text-slate-700">
+                        گفتگوی قبلی پاک شد بانو جان! چطور می‌توانم در خصوص محصولات ثنابکر کمکتان کنم؟ 🌸
+                    </div>
+                </div>
+            `;
+        }
+
+        function askAboutProductInChat(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            changeTab('chat');
+            appendMessage('user', `درباره محصول "${product.name}" توضیح بده.`);
+            
+            const typing = showTypingIndicator();
+            setTimeout(() => {
+                removeTypingIndicator(typing);
+                const isSache = product.name.includes("ساشه");
+                const priceLabel = isSache ? "بهای درمانی" : "قیمت محصول";
+
+                const responseText = `
+                    🌸 <strong>توضیحات محصول "${product.name}":</strong><br><br>
+                    💵 <strong>${priceLabel}:</strong> ${product.price.toLocaleString('fa-IR')} تومان است.<br>
+                    💡 <strong>نحوه مصرف صحیح:</strong> ${product.usage}<br>
+                    📦 <strong>حجم محصول:</strong> ${product.duration}<br><br>
+                    اگر مایل به خرید این محصول عالی هستید، با زدن دکمه «سفارش» روی غرفه، آن را به سبد خریدتان اضافه کنید تا پیش‌فاکتور آن آماده شود!
+                `;
+                appendMessage('bot', responseText, true);
+            }, 600);
+        }
+
+        function askBotQuickTag(tag) {
+            appendMessage('user', tag);
+            getAIResponse(tag);
+        }
+
+        function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input-field');
+            const text = input.value.trim();
+            if (!text) return;
+
+            appendMessage('user', text);
+            input.value = '';
+            getAIResponse(text);
+        }
+
+        function showTypingIndicator() {
+            const bubble = document.createElement('div');
+            bubble.className = `flex items-start gap-2.5 max-w-[85%] typing-indicator-el`;
+            bubble.innerHTML = `
+                <div class="w-7 h-7 rounded-full bg-gradient-to-r from-brandPink-500 to-brandOrange-500 text-white flex items-center justify-center text-xs flex-shrink-0">🤖</div>
+                <div class="bg-white text-slate-400 p-3 rounded-2xl rounded-tr-none border border-rose-100 shadow-xs text-xs flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></span>
+                    <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.15s"></span>
+                    <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.3s"></span>
+                </div>
+            `;
+            messagesContainer.appendChild(bubble);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            return bubble;
+        }
+
+        function removeTypingIndicator(el) {
+            if (el && el.parentNode) {
+                el.parentNode.removeChild(el);
+            }
+        }
+
+        // ارتباط با هوش مصنوعی گوگل با استفاده از کلید رمزگذاری شده داخلی
+        async function getAIResponse(userText) {
+            const typing = showTypingIndicator();
+            
+            const currentProductsInfo = products.map((p, i) => 
+                `${i+1}. ${p.name} - قیمت: ${p.price} تومان - روش مصرف: ${p.usage} - حجم/دوره: ${p.duration}`
+            ).join('\n');
+
+            const systemPrompt = `تو مشاور دلسوز، مهربان و با سلیقه غرفه سلامت "ثنابکر" (رسانه سلامت بانوان با آی‌دی اینستاگرام @sanabekr) هستی.
+مخاطبین تو همگی بانوان ایرانی هستند که به دنبال درمان‌های گیاهی، اصلاح سبک زندگی و خرید محصولات ارگانیک ثنابکر هستند.
+لحن تو باید بسیار با احترام، صمیمی، دلسوز و سرشار از مهربانی باشد. از کلماتی چون "بانو جان"، "عزیز ثنابکری"، "سلامت و شاداب باشید" استفاده کن.
+
+اطلاعات محصولات فعال ما:
+${currentProductsInfo}
+
+وظیفه تو:
+به سوالات مشتری در خصوص قیمت محصولات، نحوه استفاده، حجم محصول و ماندگاری آن پاسخ دقیق بده.
+همچنین اگر درباره پیج ما پرسیدند، بگو که ما رسانه سلامت بانوان هستیم و آدرس اینستاگرام ما @sanabekr است. پاسخی کوتاه و صمیمی بده تا در موبایل خوانا باشد.`;
+
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userText }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error();
+
+                const result = await response.json();
+                const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                removeTypingIndicator(typing);
+                if (aiText) {
+                    appendMessage('bot', aiText);
+                } else {
+                    useOfflineFallback(userText);
+                }
+            } catch (error) {
+                removeTypingIndicator(typing);
+                useOfflineFallback(userText);
+            }
+        }
+
+        // هوش مصنوعی آفلاین در صورت اختلال در اینترنت
+        function useOfflineFallback(query) {
+            const q = query.toLowerCase();
+            let matchedReply = "";
+
+            const hasPrice = q.includes("قیمت") || q.includes("چند") || q.includes("تومان") || q.includes("هزینه");
+            const hasUsage = q.includes("طرز") || q.includes("مصرف") || q.includes("چگونه") || q.includes("استفاده") || q.includes("دستور");
+            const hasDuration = q.includes("زمان") || q.includes("حجم") || q.includes("چقدر") || q.includes("دوره") || q.includes("بسته");
+
+            let matchedProduct = null;
+            for (let product of products) {
+                if (q.includes(product.name.substring(0, 8).toLowerCase())) {
+                    matchedProduct = product;
+                    break;
+                }
+            }
+
+            if (matchedProduct) {
+                if (hasPrice) {
+                    matchedReply = `💰 <strong>قیمت محصول "${matchedProduct.name}":</strong> ${matchedProduct.price.toLocaleString('fa-IR')} تومان می‌باشد بانو جان.`;
+                } else if (hasUsage) {
+                    matchedReply = `💡 <strong>طرز مصرف "${matchedProduct.name}":</strong> ${matchedProduct.usage} است. شاداب باشید.`;
+                } else if (hasDuration) {
+                    matchedReply = `📦 <strong>حجم و کارایی "${matchedProduct.name}":</strong> ${matchedProduct.duration} است.`;
+                } else {
+                    matchedReply = `🌸 بانو جان، محصول <strong>"${matchedProduct.name}"</strong> بسیار پرطرفدار است:<br>
+                    - بهای درمانی/قیمت: ${matchedProduct.price.toLocaleString('fa-IR')} تومان<br>
+                    - روش استفاده: ${matchedProduct.usage}<br>
+                    - حجم محصول: ${matchedProduct.duration}`;
+                }
+            } else {
+                if (hasPrice) {
+                    matchedReply = "💰 <strong>قیمت محصولات فعال ثنابکر:</strong><br><br>";
+                    products.forEach(p => {
+                        matchedReply += `🌸 <strong>${p.name}:</strong> ${p.price.toLocaleString('fa-IR')} تومان<br>`;
+                    });
+                } else if (hasUsage) {
+                    matchedReply = "💡 <strong>راهنما و دستورالعمل مصرف محصولات ارگانیک ثنابکر:</strong><br><br>";
+                    products.forEach(p => {
+                        matchedReply += `🌿 <strong>${p.name}:</strong> ${p.usage}<br><br>`;
+                    });
+                } else if (hasDuration) {
+                    matchedReply = "⏳ <strong>حجم هر بسته و ماندگاری آن:</strong><br><br>";
+                    products.forEach(p => {
+                        matchedReply += `⏳ <strong>${p.name}:</strong> ${p.duration}<br><br>`;
+                    });
+                } else {
+                    matchedReply = `بانو جان عزیز، سوال شما ثبت شد. می‌توانید درباره کلمات کلیدی مانند "قیمت"، "طرز مصرف دسر" یا "حجم فیبر" سوال کنید تا با جزئیات به شما پاسخ دهم. پیج ما را هم در اینستاگرام با آی‌دی @sanabekr دنبال کنید 🌸`;
+                }
+            }
+
+            appendMessage('bot', matchedReply, true);
+        }
+    </script>
+</body>
+</html>
